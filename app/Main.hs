@@ -1,10 +1,13 @@
 module Main where
 
 import Data.Time.Calendar
+import System.Environment (getArgs)
 
-import ICalendar
+import Event (events)
+import ICalendar (vCalendar)
 
 main :: IO ()
 main = do
-  let test = vCalendar $ [vEvent (fromGregorian 2018 9 8) "出産予定日"]
+  y:m:d:_ <- getArgs
+  let test = vCalendar $ events $ fromGregorian (read y) (read m) (read d)
   writeFile "test.ics" test
