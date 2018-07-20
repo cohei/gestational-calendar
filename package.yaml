@@ -24,16 +24,15 @@ dependencies:
 library:
   source-dirs: src
 
-executables:
-  gestational-calendar-exe:
-    main: Main.hs
-    source-dirs: app
-    ghc-options:
-      - -threaded
-      - -rtsopts
-      - -with-rtsopts=-N
-    dependencies:
-      - gestational-calendar
+executable:
+  main: Main.hs
+  source-dirs: app
+  ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+  dependencies:
+    - gestational-calendar
 
 tests:
   gestational-calendar-test:
