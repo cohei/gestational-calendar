@@ -1,0 +1,40 @@
+name: gestational-calendar
+version: 0.1.0.0
+github: cohei/gestational-calendar
+license: BSD3
+author: TANIGUCHI Kohei
+maintainer: a.d.xvii.kal.mai@gmail.com
+copyright: 2018 TANIGUCHI Kohei
+
+extra-source-files:
+  - README.md
+
+description: Please see the README on GitHub at <https://github.com/cohei/gestational-calendar#readme>
+
+dependencies:
+  - base >= 4.7 && < 5
+
+library:
+  source-dirs: src
+
+executables:
+  gestational-calendar-exe:
+    main: Main.hs
+    source-dirs: app
+    ghc-options:
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
+    dependencies:
+      - gestational-calendar
+
+tests:
+  gestational-calendar-test:
+    main: Spec.hs
+    source-dirs: test
+    ghc-options:
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
+    dependencies:
+      - gestational-calendar
