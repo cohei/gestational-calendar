@@ -1,8 +1,11 @@
 module Main where
 
 import           Network.Wai.Handler.Warp (run)
+import           System.Environment       (getEnv)
 
 import           Server                   (app)
 
 main :: IO ()
-main = run 3000 app
+main = do
+  port <- read <$> getEnv "PORT"
+  run port app
