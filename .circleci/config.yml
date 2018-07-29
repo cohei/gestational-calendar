@@ -1,0 +1,26 @@
+version: 2
+jobs:
+  build:
+    branches:
+      only:
+        - master
+    docker:
+      - image: google/cloud-sdk
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Docker イメージを作る
+          command: docker build --file Dockerfile.build --tag gcr.io/gestational-calendar/server .
+      - run:
+          name: gcloud を認証する
+          command: |
+            echo $GCLOUD_SERVICE_KEY | base64 --decode --ignore-garbage > gcloud-service-key.json
+            gcloud auth activate-service-account --key-file gcloud-service-key.json
+            gcloud auth configure-docker --quiet
+      - run:
+          name: Docker イメージをいったんプッシュする
+          command: docker push gcr.io/gestational-calendar/server
+      - run:
+          name: App Engine にデプロイする
+          command: gcloud app deploy --quiet --project gestational-calendar
