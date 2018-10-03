@@ -6,4 +6,4 @@
 
 ## 使い方
 
-`https://gestational-calendar.cohei.me/2018-09-08` のように出産予定日を含めた URL を iCal 形式の照会カレンダーとして登録する。
+https://gestational-calendar.cohei.me/2018-09-08 のように出産予定日を含めた URL を iCal 形式の照会カレンダーとして登録する。
