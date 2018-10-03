@@ -11,7 +11,7 @@ jobs:
       - setup_remote_docker
       - run:
           name: Docker イメージを作る
-          command: docker build --file Dockerfile.build --tag gcr.io/gestational-calendar/server .
+          command: docker build --tag gcr.io/gestational-calendar/server .
       - run:
           name: gcloud を認証する
           command: |
@@ -22,5 +22,5 @@ jobs:
           name: Docker イメージをいったんプッシュする
           command: docker push gcr.io/gestational-calendar/server
       - run:
-          name: App Engine にデプロイする
-          command: gcloud app deploy --quiet --project gestational-calendar
+          name: Serverless Engine にデプロイする
+          command: gcloud alpha serverless deploy server --region us-central1 --image gcr.io/gestational-calendar/server --project gestational-calendar
