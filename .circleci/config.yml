@@ -10,16 +10,25 @@ jobs:
       - checkout
       - setup_remote_docker
       - run:
-          name: Docker イメージを作る
-          command: docker build --tag gcr.io/gestational-calendar/server .
-      - run:
           name: gcloud を認証する
           command: |
             echo $GCLOUD_SERVICE_KEY | base64 --decode --ignore-garbage > gcloud-service-key.json
             gcloud auth activate-service-account --key-file gcloud-service-key.json
             gcloud auth configure-docker --quiet
       - run:
-          name: Docker イメージをいったんプッシュする
+          name: build ステージのイメージがあれば取ってくる
+          command: docker pull --all-tags gcr.io/gestational-calendar/server
+      - run:
+          name: Docker イメージを作る
+          command: docker build --cache-from gcr.io/gestational-calendar/server:build --tag gcr.io/gestational-calendar/server .
+      - run:
+          name: build ステージのイメージにタグをつける
+          command: docker build --cache-from gcr.io/gestational-calendar/server:build --target build --tag gcr.io/gestational-calendar/server:build .
+      - run:
+          name: build ステージのイメージをプッシュする
+          command: docker push gcr.io/gestational-calendar/server:build
+      - run:
+          name: Docker イメージをプッシュする
           command: docker push gcr.io/gestational-calendar/server
       - run:
           name: Serverless Engine にデプロイする
