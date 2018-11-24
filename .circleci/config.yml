@@ -32,4 +32,4 @@ jobs:
           command: docker push gcr.io/gestational-calendar/server
       - run:
           name: Serverless Engine にデプロイする
-          command: gcloud alpha serverless deploy server --region us-central1 --image gcr.io/gestational-calendar/server --project gestational-calendar
+          command: gcloud alpha run deploy server --region us-central1 --image gcr.io/gestational-calendar/server --project gestational-calendar
