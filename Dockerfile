@@ -1,4 +1,4 @@
-FROM haskell:8.4.3 AS build
+FROM haskell:8.6.3 AS build
 
 # STATIC COMPILATION WITH STACK.
 # https://www.fpcomplete.com/blog/2016/10/static-compilation-with-stack
