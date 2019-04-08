@@ -1,4 +1,13 @@
 version: 2.1
+commands:
+  authenticate-gcloud:
+    steps:
+      - run:
+          name: gcloud を認証する
+          command: |
+            echo $GCLOUD_SERVICE_KEY | base64 --decode --ignore-garbage > gcloud-service-key.json
+            gcloud auth activate-service-account --key-file gcloud-service-key.json
+            gcloud auth configure-docker --quiet
 jobs:
   build:
     docker:
@@ -9,12 +18,7 @@ jobs:
       - run:
           name: Docker イメージを作る
           command: docker build --tag gcr.io/gestational-calendar/server .
-      - run:
-          name: gcloud を認証する
-          command: |
-            echo $GCLOUD_SERVICE_KEY | base64 --decode --ignore-garbage > gcloud-service-key.json
-            gcloud auth activate-service-account --key-file gcloud-service-key.json
-            gcloud auth configure-docker --quiet
+      - authenticate-gcloud
       - run:
           name: Docker イメージをいったんプッシュする
           command: docker push gcr.io/gestational-calendar/server
@@ -22,12 +26,7 @@ jobs:
     docker:
       - image: google/cloud-sdk
     steps:
-      - run:
-          name: gcloud を認証する
-          command: |
-            echo $GCLOUD_SERVICE_KEY | base64 --decode --ignore-garbage > gcloud-service-key.json
-            gcloud auth activate-service-account --key-file gcloud-service-key.json
-            gcloud auth configure-docker --quiet
+      - authenticate-gcloud
       - run:
           name: Serverless Engine にデプロイする
           command: gcloud alpha run deploy server --region us-central1 --image gcr.io/gestational-calendar/server --project gestational-calendar
