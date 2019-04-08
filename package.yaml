@@ -21,6 +21,12 @@ dependencies:
   - wai
   - warp
 
+flags:
+  static:
+    description: Build static binary
+    manual: true
+    default: false
+
 library:
   source-dirs: src
 
@@ -33,6 +39,10 @@ executable:
     - -with-rtsopts=-N
   dependencies:
     - gestational-calendar
+  when:
+    - condition: flag(static)
+      # https://www.reddit.com/r/haskell/comments/6xuiy7/building_static_binaries_program_a_convoluted/dmjqode/
+      ld-options: -static
 
 tests:
   gestational-calendar-test:

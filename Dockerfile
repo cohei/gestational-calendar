@@ -1,31 +1,28 @@
 FROM haskell:8.6.3 AS build
 
-# STATIC COMPILATION WITH STACK.
-# https://www.fpcomplete.com/blog/2016/10/static-compilation-with-stack
-
-WORKDIR /usr/lib/gcc/x86_64-linux-gnu/6/
-RUN cp crtbeginT.o crtbeginT.o.orig
-RUN cp crtbeginS.o crtbeginT.o
+RUN cabal new-update
+RUN cabal new-install hpack
 
 WORKDIR /app
 
-COPY stack.yaml ./
-RUN stack setup
+COPY cabal.project package.yaml ./
+RUN hpack
+RUN cabal new-build --only-dependencies
 
-COPY package.yaml ./
-RUN stack build --only-dependencies
-
-COPY Setup.hs ./
+COPY Setup.hs README.md ./
 COPY app/ app/
 COPY src/ src/
-RUN stack install --ghc-options '-optl-static -fPIC'
+COPY test/ test/
+# Haskell モジュールが追加されて Cabal ファイルの内容が変わるのでもう一回
+RUN hpack
+RUN cabal new-install exe:gestational-calendar --flags=static
 
-RUN ldd /root/.local/bin/gestational-calendar || true
-RUN du -hs /root/.local/bin/gestational-calendar
+RUN ldd /root/.cabal/bin/gestational-calendar || true
+RUN du -h $(readlink -f /root/.cabal/bin/gestational-calendar)
 
 FROM scratch
 
-COPY --from=build /root/.local/bin/gestational-calendar /gestational-calendar
+COPY --from=build /root/.cabal/bin/gestational-calendar /gestational-calendar
 
 ENV PORT 8080
 EXPOSE $PORT

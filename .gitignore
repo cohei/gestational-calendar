@@ -1,2 +1,3 @@
-/.stack-work/
+/.ghc.environment.*
+/dist-newstyle/
 /gestational-calendar.cabal
