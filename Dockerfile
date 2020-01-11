@@ -1,4 +1,4 @@
-FROM haskell:8.6.3 AS build
+FROM haskell:8.6.5 AS build
 
 RUN cabal new-update
 RUN cabal new-install hpack
