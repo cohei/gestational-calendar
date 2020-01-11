@@ -1,5 +1,7 @@
 FROM haskell:9.8.2 AS build
 
+RUN apt-get update && apt-get install --yes --no-install-recommends upx
+
 RUN cabal update
 
 WORKDIR /app
@@ -20,6 +22,8 @@ RUN cp $(cabal list-bin exe:gestational-calendar) ./
 
 RUN ldd gestational-calendar || true
 RUN du -h gestational-calendar
+
+RUN upx gestational-calendar
 
 FROM scratch
 
