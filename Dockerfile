@@ -16,6 +16,10 @@ RUN cabal install --enable-executable-static exe:gestational-calendar
 RUN ldd /root/.cabal/bin/gestational-calendar || true
 RUN du -h $(readlink -f /root/.cabal/bin/gestational-calendar)
 
+RUN apt-get update && apt-get install --yes --no-install-recommends upx
+RUN upx $(readlink -f /root/.cabal/bin/gestational-calendar)
+RUN du -h $(readlink -f /root/.cabal/bin/gestational-calendar)
+
 FROM scratch
 
 COPY --from=build /root/.cabal/bin/gestational-calendar /gestational-calendar
