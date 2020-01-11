@@ -11,7 +11,7 @@ COPY Setup.hs README.md LICENSE ./
 COPY app/ app/
 COPY src/ src/
 COPY test/ test/
-RUN cabal install exe:gestational-calendar --flags=static
+RUN cabal install --enable-executable-static exe:gestational-calendar
 
 RUN ldd /root/.cabal/bin/gestational-calendar || true
 RUN du -h $(readlink -f /root/.cabal/bin/gestational-calendar)
