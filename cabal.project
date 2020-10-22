@@ -1,9 +1,2 @@
 packages: .
--- servant
---  base-compat
---   unix
---    time < 1.9
---  http-api-data
---   time < 1.9
--- などの制約を破って time-1.9.* を使うため
-allow-newer: time
+with-compiler: ghc-8.10.2
