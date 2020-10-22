@@ -1,9 +1,10 @@
-FROM haskell:8.8.1 AS build
+FROM haskell:8.8.4 AS build
 
 RUN cabal update
 
 WORKDIR /app
 
+ENV LANG C.UTF-8
 COPY cabal.project gestational-calendar.cabal ./
 RUN cabal build --only-dependencies
 
