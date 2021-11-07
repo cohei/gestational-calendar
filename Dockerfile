@@ -1,4 +1,4 @@
-FROM haskell:8.10.2 AS build
+FROM haskell:8.10.7 AS build
 
 RUN cabal update
 
