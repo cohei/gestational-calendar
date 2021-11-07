@@ -1,6 +1,6 @@
 [![CircleCI](https://circleci.com/gh/cohei/gestational-calendar.svg?style=svg)](https://circleci.com/gh/cohei/gestational-calendar)
 
-# 妊娠週数カレンダー 
+# 妊娠週数カレンダー
 
 出産予定日をもとにして、妊娠週・月をカレンダーに表示します。
 
