@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/cohei/gestational-calendar.svg?style=svg)](https://circleci.com/gh/cohei/gestational-calendar)
+![main workflow](https://github.com/cohei/gestational-calendar/actions/workflows/main.yml/badge.svg)
 
 # 妊娠週数カレンダー
 
