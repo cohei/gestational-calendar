@@ -7,7 +7,7 @@ commands:
           command: |
             echo $GCLOUD_SERVICE_KEY | base64 --decode --ignore-garbage > gcloud-service-key.json
             gcloud auth activate-service-account --key-file gcloud-service-key.json
-            gcloud auth configure-docker --quiet
+            gcloud auth configure-docker --quiet asia-northeast1-docker.pkg.dev
 jobs:
   build:
     docker:
@@ -17,11 +17,11 @@ jobs:
       - setup_remote_docker
       - run:
           name: Docker イメージを作る
-          command: docker build --tag gcr.io/gestational-calendar/server .
+          command: docker build --tag asia-northeast1-docker.pkg.dev/gestational-calendar/server/server .
       - authenticate-gcloud
       - run:
           name: Docker イメージをいったんプッシュする
-          command: docker push gcr.io/gestational-calendar/server
+          command: docker push asia-northeast1-docker.pkg.dev/gestational-calendar/server/server
   deploy:
     docker:
       - image: google/cloud-sdk
@@ -29,7 +29,8 @@ jobs:
       - authenticate-gcloud
       - run:
           name: Serverless Engine にデプロイする
-          command: gcloud run deploy server --region asia-northeast1 --image gcr.io/gestational-calendar/server --project gestational-calendar --platform managed
+          command: gcloud run deploy server --region asia-northeast1 --image asia-northeast1-docker.pkg.dev/gestational-calendar/server/server --project gestational-calendar --platform managed
+
 workflows:
   version: 2
   build_and_deploy:
