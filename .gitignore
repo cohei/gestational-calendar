@@ -1,1 +1,3 @@
+/.terraform/
 /dist-newstyle/
+/terraform.tfstate
