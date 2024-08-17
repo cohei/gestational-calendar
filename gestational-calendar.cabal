@@ -29,11 +29,6 @@ common dependency
     , wai
     , warp
 
-flag static
-  description: Build static binary
-  manual: True
-  default: False
-
 library
   import: dependency
   exposed-modules:
@@ -51,9 +46,6 @@ executable gestational-calendar
       app
   build-depends:
     gestational-calendar
-  -- https://www.reddit.com/r/haskell/comments/6xuiy7/building_static_binaries_program_a_convoluted/dmjqode/
-  if flag(static)
-    ld-options: -static
   default-language: Haskell2010
 
 test-suite gestational-calendar-test
