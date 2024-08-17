@@ -20,8 +20,9 @@ COPY test/ test/
 RUN cabal build --enable-executable-static exe:gestational-calendar
 RUN cp $(cabal list-bin exe:gestational-calendar) ./
 
-RUN ldd gestational-calendar || true
-RUN du -h gestational-calendar
+# ldd returns 0 if there are linked libraries, 1 otherwise
+# fail if not statically linked
+RUN ! ldd gestational-calendar
 
 RUN upx gestational-calendar
 
