@@ -1,11 +1,18 @@
 {
   description = "Gestational Calendar";
 
-  outputs = { self, nixpkgs, flake-utils }:
+  inputs = {
+    nixpkgs-unfree = {
+      url = "github:numtide/nixpkgs-unfree";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
+
+  outputs = { self, nixpkgs, nixpkgs-unfree, flake-utils }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
-        unfree = import nixpkgs { inherit system; config.allowUnfree = true; };
+        unfree = nixpkgs-unfree.legacyPackages.${system};
       in
         {
           devShells.default = pkgs.mkShell {
