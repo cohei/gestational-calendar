@@ -16,7 +16,7 @@
       in
         {
           devShells.default = pkgs.mkShell {
-            buildInputs = with pkgs; [
+            packages = with pkgs; [
               google-cloud-sdk
               pkgs.zlib
               unfree.terraform
