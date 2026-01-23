@@ -1,6 +1,9 @@
-FROM haskell:9.8.2 AS build
+FROM haskell:9.12.2 AS build
 
-RUN apt-get update && apt-get install --yes --no-install-recommends upx
+RUN echo "deb http://deb.debian.org/debian bookworm-backports main contrib" \
+    >> /etc/apt/sources.list.d/bookworm-backports.list && \
+    apt-get update && \
+    apt-get install --yes --no-install-recommends upx-ucl
 
 RUN cabal update
 
