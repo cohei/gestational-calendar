@@ -13,7 +13,7 @@ ENV LANG=C.UTF-8
 COPY cabal.project gestational-calendar.cabal ./
 RUN cabal build --only-dependencies
 
-COPY Setup.hs README.md LICENSE ./
+COPY README.md LICENSE ./
 COPY app/ app/
 COPY src/ src/
 COPY test/ test/

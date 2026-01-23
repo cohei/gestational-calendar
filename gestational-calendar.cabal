@@ -1,18 +1,16 @@
-cabal-version: 2.2
-
-name:           gestational-calendar
-version:        0.1.0.0
-description:    Please see the README on GitHub at <https://github.com/cohei/gestational-calendar#readme>
-homepage:       https://github.com/cohei/gestational-calendar#readme
-bug-reports:    https://github.com/cohei/gestational-calendar/issues
-author:         TANIGUCHI Kohei
-maintainer:     a.d.xvii.kal.mai@gmail.com
-copyright:      2018 TANIGUCHI Kohei
-license:        BSD-3-Clause
-license-file:   LICENSE
-build-type:     Simple
+cabal-version: 3.8
+name: gestational-calendar
+version: 0.1.0.0
+description: Please see the README on GitHub at <https://github.com/cohei/gestational-calendar#readme>
+homepage: https://github.com/cohei/gestational-calendar#readme
+bug-reports: https://github.com/cohei/gestational-calendar/issues
+author: TANIGUCHI Kohei
+maintainer: a.d.xvii.kal.mai@gmail.com
+copyright: 2018 TANIGUCHI Kohei
+license: BSD-3-Clause
+license-file: LICENSE
 extra-source-files:
-    README.md
+  README.md
 
 source-repository head
   type: git
@@ -20,39 +18,32 @@ source-repository head
 
 common dependency
   build-depends:
-      base >= 4.7 && < 5
-    , bytestring
-    , http-media
-    , text
-    , time >= 1.9
-    , servant-server
-    , wai
-    , warp
+    base >=4.7 && <5,
+    bytestring,
+    http-media,
+    servant-server,
+    text,
+    time >=1.9,
+    wai,
+    warp,
 
 library
   import: dependency
+  hs-source-dirs: src
   exposed-modules:
-      Event
-      ICalendar
-      Server
-  hs-source-dirs:
-      src
-  default-language: Haskell2010
+    Event
+    ICalendar
+    Server
+  default-language: GHC2024
 
 executable gestational-calendar
   import: dependency
+  hs-source-dirs: app
   main-is: Main.hs
-  hs-source-dirs:
-      app
-  build-depends:
-    gestational-calendar
-  default-language: Haskell2010
+  build-depends: gestational-calendar
 
 test-suite gestational-calendar-test
   import: dependency
-  type: exitcode-stdio-1.0
-  main-is: Spec.hs
   hs-source-dirs: test
-  build-depends:
-    gestational-calendar
-  default-language: Haskell2010
+  main-is: Spec.hs
+  build-depends: gestational-calendar
