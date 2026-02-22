@@ -41,6 +41,7 @@ executable gestational-calendar
   hs-source-dirs: app
   main-is: Main.hs
   build-depends: gestational-calendar
+  ghc-options: -threaded
 
 test-suite gestational-calendar-test
   import: dependency
